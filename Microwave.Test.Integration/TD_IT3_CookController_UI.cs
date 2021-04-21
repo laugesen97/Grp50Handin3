@@ -92,7 +92,8 @@ namespace Microwave.Test.Integration
             //60 kendes igen fra tidligere White Box undersøgelse..
             fakeDisplay.Received(1).ShowTime(1,0);
         }
-        public void Timer_Cooked1Minuted_TBD()
+        [Test]
+        public void Timer_DoorOpens_StopIsCalled()
         {
             //Navngivningen af metoden skal vi have kigget på. :)
 
@@ -105,7 +106,63 @@ namespace Microwave.Test.Integration
 
             _startCancelButton.Press();
 
-            //60 kendes igen fra tidligere White Box undersøgelse..
+            _door.Open();
+
+            fakeTimer.Received(1).Stop();
+        }
+        [Test]
+        public void Timer_CancelPressed_StopIsCalled()
+        {
+            //Navngivningen af metoden skal vi have kigget på. :)
+
+            //Arrange
+
+            //Act
+            _powerButton.Press();
+
+            _timeButton.Press();
+
+            _startCancelButton.Press();
+
+            _startCancelButton.Press();
+
+            fakeTimer.Received(1).Stop();
+        }
+        [Test]
+        public void PowerTube_DoorOpens_TurnOffIsCalled()
+        {
+            //Navngivningen af metoden skal vi have kigget på. :)
+
+            //Arrange
+
+            //Act
+            _powerButton.Press();
+
+            _timeButton.Press();
+
+            _startCancelButton.Press();
+
+            _door.Open();
+
+            fakepowerTube.Received(1).TurnOff();
+        }
+        [Test]
+        public void PowerTube_CancelPressed_TurnOffIsCalled()
+        {
+            //Navngivningen af metoden skal vi have kigget på. :)
+
+            //Arrange
+
+            //Act
+            _powerButton.Press();
+
+            _timeButton.Press();
+
+            _startCancelButton.Press();
+
+            _startCancelButton.Press();
+
+            fakepowerTube.Received(1).TurnOff();
         }
     }
 }
