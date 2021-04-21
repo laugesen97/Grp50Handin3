@@ -22,7 +22,7 @@ namespace Microwave.Test.Integration
             _fakeDisplay = Substitute.For<IDisplay>();
             _fakeLight = Substitute.For<ILight>();
 
-            _userInterface = new UserInterface();
+            //_userInterface = new UserInterface();
 
             _sut = new Door();
 

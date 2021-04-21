@@ -35,9 +35,46 @@ namespace Microwave.Test.Integration
       }
 
       [Test]
-      public void OnDoorOpened_Opendoor_LightGoesOn()
+      public void Press_PowerButtonPressedByUser_ShowPowerIsCalled()
       {
+         //Arrange
 
+         //Act
+         powerButton.Press();
+
+         //Assert
+         fakeDisplay.Received(1).ShowPower(50);
+      }
+
+
+      [Test]
+      public void Press_TimeButtonPressedByUser_ShowTimeIsCalled()
+      {
+         //Arrange
+
+         //Act
+         powerButton.Press();
+
+         timeButton.Press();
+
+         //Assert
+         fakeDisplay.Received(1).ShowTime(1,0);
+      }
+
+      [Test]
+      public void Press_StartButtonPressedByUser_StartIsCalled()
+      {
+         //Arrange
+
+         //Act
+         powerButton.Press();
+
+         timeButton.Press();
+
+         startCancelButton.Press();
+
+         //Assert
+         fakeLight.Received(1).TurnOn();
       }
    }
 }
