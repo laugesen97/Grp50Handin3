@@ -95,5 +95,40 @@ namespace Microwave.Test.Integration
           //Assert
           fakeLight.Received(1).TurnOff();
         }
-   }
+
+      [Test]
+      public void Press_StartButtonPressedByUser_StartCookingIsCalled()
+      {
+          //Arrange
+
+          //Act
+          powerButton.Press();
+
+          timeButton.Press();
+
+          startCancelButton.Press();
+
+          //Assert
+          //50 og 1 kender vi, da vi har kigget med "White box" øjne
+          fakeCooker.Received(1).StartCooking(50,60);
+        }
+
+      [Test]
+      public void Press_CancelButtonPressedByUser_StopIsCalled()
+      {
+          //Arrange
+
+          //Act
+          powerButton.Press();
+
+          timeButton.Press();
+
+          startCancelButton.Press();
+
+          startCancelButton.Press();
+
+          //Assert
+          fakeCooker.Received(1).Stop();
+      }
+    }
 }

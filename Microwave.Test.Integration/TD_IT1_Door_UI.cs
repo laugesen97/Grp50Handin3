@@ -51,27 +51,31 @@ namespace Microwave.Test.Integration
         [Test]
         public void OnDoorClosed_CloseDoor_LightIsTurnedOff()
         {
-
-            
-
-
             //act
             _sut.Open();
             _sut.Close();
 
             //Assert
             _fakeLight.Received(1).TurnOff();
-
         }
 
+        [Test]
+        public void OpensDoor_ExtensionDoorOpenedWhileCooking_Stop()
+        {
+            //Arrange
 
+            //Act
+            fakePowerButton.Press();
 
+            fakeTimeButton.Press();
 
+            fakeStartCancelButton.Press();
 
+            _sut.Open();
 
-
-
-
+            //Assert
+            _fakeCoockController.Received(1).Stop();
+        }
     }
     
 }
