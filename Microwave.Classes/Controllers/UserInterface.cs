@@ -94,7 +94,8 @@ namespace Microwave.Classes.Controllers
                 case States.COOKING:
                     ResetValues();
                     myCooker.Stop();
-                    myLight.TurnOff();
+                    myLight.TurnOff();  //Vi indsætter nedenfor TurnOn da der skal være lys i microen når man starter den
+                    //myLight.TurnOn();
                     myDisplay.Clear();
                     myState = States.READY;
                     break;

@@ -29,6 +29,7 @@ namespace Microwave.Test.Integration
          fakeDoor = Substitute.For<IDoor>();
          fakeDisplay = Substitute.For<IDisplay>();
          fakeCooker = Substitute.For<ICookController>();
+         fakeLight = Substitute.For<ILight>();
 
          UI = new UserInterface(powerButton, timeButton, startCancelButton, fakeDoor, fakeDisplay, fakeLight,
             fakeCooker);
@@ -76,5 +77,23 @@ namespace Microwave.Test.Integration
          //Assert
          fakeLight.Received(1).TurnOn();
       }
+
+      [Test]
+      public void Press_cancelButtonPressedByUser_CanceledIsCalled()
+      {
+          //Arrange
+
+          //Act
+          powerButton.Press();
+
+          timeButton.Press();
+
+          startCancelButton.Press();
+
+          startCancelButton.Press();
+
+          //Assert
+          fakeLight.Received(1).TurnOff();
+        }
    }
 }
