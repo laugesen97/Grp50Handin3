@@ -60,6 +60,48 @@ namespace Microwave.Test.Integration
       }
 
       [Test]
+      public void Timer_CookingIsStarted2_StartIsCalled()
+      {
+         //Navngivningen af metoden skal vi have kigget på. :)
+
+         //Arrange
+
+         //Act
+         _powerButton.Press();
+
+         _timeButton.Press();
+
+         _timeButton.Press();
+
+         _startCancelButton.Press();
+
+         //60 kendes igen fra tidligere White Box undersøgelse..
+         fakeTimer.Received(1).Start(120);
+      }
+
+      [Test]
+      public void Timer_CookingIsStarted3_StartIsCalled()
+      {
+         //Navngivningen af metoden skal vi have kigget på. :)
+
+         //Arrange
+
+         //Act
+         _powerButton.Press();
+
+         _timeButton.Press();
+
+         _timeButton.Press();
+
+         _timeButton.Press();
+
+         _startCancelButton.Press();
+
+         //60 kendes igen fra tidligere White Box undersøgelse..
+         fakeTimer.Received(1).Start(180);
+      }
+
+      [Test]
       public void Timer_CookingIsStarted_StartIsNotCalled()
       {
          //Navngivningen af metoden skal vi have kigget på. :)
@@ -93,6 +135,48 @@ namespace Microwave.Test.Integration
 
          //50 kendes igen fra tidligere White Box undersøgelse..
          fakepowerTube.Received(1).TurnOn(50);
+      }
+
+      [Test]
+      public void PowerTube_CookingIsStarted2_TurnOnIsCalled()
+      {
+         //Navngivningen af metoden skal vi have kigget på. :)
+
+         //Arrange
+
+         //Act
+         _powerButton.Press();
+
+         _powerButton.Press();
+
+         _timeButton.Press();
+
+         _startCancelButton.Press();
+
+         //50 kendes igen fra tidligere White Box undersøgelse..
+         fakepowerTube.Received(1).TurnOn(100);
+      }
+
+      [Test]
+      public void PowerTube_CookingIsStarted3_TurnOnIsCalled()
+      {
+         //Navngivningen af metoden skal vi have kigget på. :)
+
+         //Arrange
+
+         //Act
+         _powerButton.Press();
+
+         _powerButton.Press();
+
+         _powerButton.Press();
+
+         _timeButton.Press();
+
+         _startCancelButton.Press();
+
+         //50 kendes igen fra tidligere White Box undersøgelse..
+         fakepowerTube.Received(1).TurnOn(150);
       }
 
       [Test]
