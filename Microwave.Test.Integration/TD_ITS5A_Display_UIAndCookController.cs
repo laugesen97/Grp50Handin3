@@ -109,5 +109,25 @@ namespace Microwave.Test.Integration
          //Assert
          fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("Display cleared")));
       }
-   }
+
+      [Test]
+      public void Output_TimeHaveTicked_ClearIsCalled()
+      {
+          //Navngivningen af metoden skal vi have kigget på. :)
+
+          //Arrange
+
+          //Act
+          _powerButton.Press();
+
+          _timeButton.Press();
+
+          _startCancelButton.Press();
+
+          fakeTimer.Expired += Raise.Event();
+
+            //Assert
+            fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("Display cleared")));
+      }
+    }
 }

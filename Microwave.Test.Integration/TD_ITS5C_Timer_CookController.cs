@@ -93,6 +93,5 @@ namespace Microwave.Test.Integration
          //Assert
          fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("PowerTube turned off")));
       }
-
    }
 }

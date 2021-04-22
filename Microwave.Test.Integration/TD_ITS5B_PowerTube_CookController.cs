@@ -87,5 +87,25 @@ namespace Microwave.Test.Integration
          fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("PowerTube turned off")));
       }
 
-   }
+      [Test]
+      public void Output_TimeHaveTicked_TurnedOffIsCalled()
+      {
+          //Navngivningen af metoden skal vi have kigget på. :)
+
+          //Arrange
+
+          //Act
+          _powerButton.Press();
+
+          _timeButton.Press();
+
+          _startCancelButton.Press();
+
+          fakeTimer.Expired += Raise.Event();
+
+          //Assert
+          fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("PowerTube turned off")));
+      }
+
+    }
 }

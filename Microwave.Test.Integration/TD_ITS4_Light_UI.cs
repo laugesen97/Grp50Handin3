@@ -102,5 +102,21 @@ namespace Microwave.Test.Integration
             //fakeOutput.Received(1).OutputLine("Light is turned off");
             fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("turned off")));
         }
+
+        [Test]
+        public void Output_TimeHaveTicked_LightIsTurnedOff()
+        {
+            //Act
+            _powerButton.Press();
+
+            _timeButton.Press();
+
+            _startCancelButton.Press();
+
+            fakeTimer.Expired += Raise.Event();
+
+            //Assert
+            fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("turned off")));
+        }
     }
 }
