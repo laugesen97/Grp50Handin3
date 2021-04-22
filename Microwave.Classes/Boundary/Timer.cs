@@ -43,6 +43,9 @@ namespace Microwave.Classes.Boundary
         {
             // One tick has passed
             // Do what I should
+            //HAHAHAH Frank, vi har fundet den 2. fejl
+            // TimeRemaining -= 1000;
+
             TimeRemaining -= 1000;
             TimerTick?.Invoke(this, EventArgs.Empty);
 
