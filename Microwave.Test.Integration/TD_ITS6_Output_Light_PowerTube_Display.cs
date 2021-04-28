@@ -139,19 +139,51 @@ namespace Microwave.Test.Integration
                                                       "Display shows: 00:59 min\r\n"));
         }
 
-        //[Test]
-        //public void OutputLine_CookingIsDone_LogLineIsCalled()
-        //{
-        //    _powerButton.Press();
-        //    _timeButton.Press();
-        //    _startCancelButton.Press();
-        //    var output = new StringWriter();
-        //    Thread.Sleep(58000);
-        //    Console.SetOut(output);
+        [Test]
+        public void OutputLine_CookingIsDone_LogLineIsCalled()
+        {
+            //Arrange
+            _powerButton.Press();
+            _timeButton.Press();
+           
 
-        //    Assert.That(output.ToString(),
-        //        Is.EqualTo("PowerTube turned off\r\nLight is turned off\r\nDisplay cleared\r\n"));
-        //}
+            //Act
+            _startCancelButton.Press();
+            Thread.Sleep(60500);
+            var output = new StringWriter();
+            Console.SetOut(output);
+            string outputstring = output.ToString();
+            //Sammenlign med output..
+            Assert.That(outputstring.Contains("PowerTube turned off\r\nDisplay cleared\r\nLight turned off\r\n"));
+        }
+        [Test]
+        public void OutputLine_DoorOpenedWhenSettingPower_LogLineIsCalled()
+        {
+            //Arrange
+            _powerButton.Press();
+            var output = new StringWriter();
+            Console.SetOut(output);
+
+            //Act
+            _door.Open();
+
+            //Assert
+            Assert.That(output.ToString(),Is.EqualTo("Light is turned on\r\nDisplay cleared\r\n"));
+        }
+        [Test]
+        public void OutputLine_DoorOpenedWhenSettingTime_LogLineIsCalled()
+        {
+            //Arrange
+            _powerButton.Press();
+            _timeButton.Press();
+            var output = new StringWriter();
+            Console.SetOut(output);
+            
+            //Act
+            _door.Open();
+            //Assert
+            Assert.That(output.ToString(), Is.EqualTo("Light is turned on\r\nDisplay cleared\r\n"));
+        }
 
         [Test]
         public void OutputLine_DoorIsOpenedWhileCooking_LogLineIsCalled()
@@ -188,6 +220,5 @@ namespace Microwave.Test.Integration
             //Assert
             Assert.That(output.ToString(), Is.EqualTo("PowerTube turned off\r\nLight is turned off\r\nDisplay cleared\r\n"));
         }
-
     }
 }

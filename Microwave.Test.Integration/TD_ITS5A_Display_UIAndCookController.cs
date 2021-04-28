@@ -113,9 +113,7 @@ namespace Microwave.Test.Integration
       [Test]
       public void Output_TimeHaveTicked_ClearIsCalled()
       {
-          //Navngivningen af metoden skal vi have kigget på. :)
-
-          //Arrange
+         //Arrange
 
           //Act
           _powerButton.Press();
@@ -129,5 +127,14 @@ namespace Microwave.Test.Integration
             //Assert
             fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("Display cleared")));
       }
-    }
+
+      [Test]
+      public void Output_CancelButtonPressedWhileSettingPower_ClearIsCalled()
+      {
+          _powerButton.Press();
+          _startCancelButton.Press();
+
+          fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("Display cleared")));
+      }
+   }
 }

@@ -90,7 +90,6 @@ namespace Microwave.Test.Integration
       [Test]
       public void Output_TimeHaveTicked_TurnedOffIsCalled()
       {
-          //Navngivningen af metoden skal vi have kigget på. :)
 
           //Arrange
 
@@ -107,5 +106,31 @@ namespace Microwave.Test.Integration
           fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("PowerTube turned off")));
       }
 
+      [Test]
+      public void Output_PowerButtonPressed5Times_CookingWith250W()
+      {
+          for (int i = 0; i < 5; i++)
+          {
+              _powerButton.Press();
+          }
+
+          _timeButton.Press();
+          _startCancelButton.Press();
+
+          fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("PowerTube works with") && s.Contains("W")));
+      }
+      [Test]
+      public void Output_PowerButtonPressed5Times_CookingWith700W()
+      {
+          for (int i = 0; i < 13; i++)
+          {
+              _powerButton.Press();
+          }
+
+          _timeButton.Press();
+          _startCancelButton.Press();
+
+          fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("PowerTube works with") && s.Contains("W")));
+      }
     }
 }
