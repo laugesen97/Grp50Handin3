@@ -124,13 +124,14 @@ namespace Microwave.Test.Integration
       public void OutputLine_StartIsPressedAndWaitedOneSec_LogLineIsCalled()
       {
          //Arrange
-         _powerButton.Press();
-         _timeButton.Press();
          var output = new StringWriter();
-         Console.SetOut(output);
 
          //Act
+         _powerButton.Press();
+         _timeButton.Press();
+         Console.SetOut(output);
          _startCancelButton.Press();
+         
          Thread.Sleep(2000);
 
 
@@ -143,6 +144,7 @@ namespace Microwave.Test.Integration
       public void OutputLine_CookingIsDone_LogLineIsCalled()
       {
          //Arrange
+         var output = new StringWriter();
 
          //Act
          _powerButton.Press();
@@ -150,16 +152,15 @@ namespace Microwave.Test.Integration
          _timeButton.Press();
 
          _startCancelButton.Press();
-
-         var output = new StringWriter();
-         Thread.Sleep(60500);
-
          Console.SetOut(output);
+
+         Thread.Sleep(60500);
 
          string outputstring = output.ToString();
 
          //Sammenlign med output..
-         Assert.That(outputstring.Contains("PowerTube turned off\r\nDisplay cleared\r\nLight turned off\r\n"));
+         Assert.That(outputstring.Contains("PowerTube turned off") && outputstring.Contains("Display cleared") &&
+                     outputstring.Contains("Light is turned off"));
       }
       [Test]
       public void OutputLine_DoorOpenedWhenSettingPower_LogLineIsCalled()
@@ -214,7 +215,7 @@ namespace Microwave.Test.Integration
          _powerButton.Press();
          _timeButton.Press();
          _startCancelButton.Press();
-         Thread.Sleep(5000); //Der laves mad
+         Thread.Sleep(5200); //Der laves mad
 
          var output = new StringWriter();
          Console.SetOut(output);

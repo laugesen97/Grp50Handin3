@@ -57,8 +57,8 @@ namespace Microwave.Test.Integration
          Thread.Sleep(1000);
          
          //Assert
-         //                 //2 pga. den viser både 01.00 og 00.59
-        // fakeOutput.Received(2).OutputLine(Arg.Is<string>(s => s.Contains("Display shows:") && s.Contains("min")));
+         //2 pga. den viser både 01.00 og 00.59
+        fakeOutput.Received(2).OutputLine(Arg.Is<string>(s => s.Contains("Display shows:") && s.Contains("min")));
       }
 
       [Test]
@@ -71,11 +71,11 @@ namespace Microwave.Test.Integration
 
          _startCancelButton.Press();
 
-         //Thread.Sleep(60500);
+         Thread.Sleep(60500);
 
          //Assert
-         //fakeOutput.Received(61).OutputLine(Arg.Is<string>(s =>s.Contains("Display shows:") && s.Contains("min")));
-        // fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("PowerTube turned off")));
+         fakeOutput.Received(61).OutputLine(Arg.Is<string>(s =>s.Contains("Display shows:") && s.Contains("min")));
+         fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("PowerTube turned off")));
       }
 
       [Test]

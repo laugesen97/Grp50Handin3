@@ -35,7 +35,7 @@ namespace Microwave.Test.Integration
          _timeButton = new Button();
          _startCancelButton = new Button();
          _door = new Door();
-         
+
          display = new Display(sut);
          light = new Light(sut);
          powerTube = new PowerTube(sut);
@@ -60,18 +60,18 @@ namespace Microwave.Test.Integration
          Assert.That(output.ToString(), Is.EqualTo("Light is turned on\r\n"));
       }
 
-        [Test]
-        public void OutputLine_DoorIsOpenedAndClosed_LogLineIsCalled()
-        {
-            //Arrange
-          
-            var output = new StringWriter();
-            
+      [Test]
+      public void OutputLine_DoorIsOpenedAndClosed_LogLineIsCalled()
+      {
+         //Arrange
 
-            //Act
-            _door.Open();
-            Console.SetOut(output);
-            _door.Close();
+         var output = new StringWriter();
+
+
+         //Act
+         _door.Open();
+         Console.SetOut(output);
+         _door.Close();
 
          //Assert
          Assert.That(output.ToString(), Is.EqualTo("Light is turned off\r\n"));
@@ -91,151 +91,138 @@ namespace Microwave.Test.Integration
          Assert.That(output.ToString(), Is.EqualTo("Display shows: 50 W\r\n"));
       }
 
-        [Test]
-        public void OutputLine_TimeButtonIsPressed_LogLineIsCalled()
-        {
-            //Arrange
-          
-            var output = new StringWriter();
-          
+      [Test]
+      public void OutputLine_TimeButtonIsPressed_LogLineIsCalled()
+      {
+         //Arrange
 
-            //Act
-            _powerButton.Press();
-            Console.SetOut(output);
-            _timeButton.Press();
+         var output = new StringWriter();
+
+
+         //Act
+         _powerButton.Press();
+         Console.SetOut(output);
+         _timeButton.Press();
 
 
          //Assert
          Assert.That(output.ToString(), Is.EqualTo("Display shows: 01:00 min\r\n"));
       }
 
-        [Test]
-        public void OutputLine_StartCancelButtonIsPressed_LogLineIsCalled()
-        {
-            //Arrange
-            
-            var output = new StringWriter();
-           
+      [Test]
+      public void OutputLine_StartCancelButtonIsPressed_LogLineIsCalled()
+      {
+         //Arrange
 
-            //Act
-            _powerButton.Press();
-            _timeButton.Press();
-            Console.SetOut(output);
-            _startCancelButton.Press();
+         var output = new StringWriter();
+
+
+         //Act
+         _powerButton.Press();
+         _timeButton.Press();
+         Console.SetOut(output);
+         _startCancelButton.Press();
 
 
          //Assert
          Assert.That(output.ToString(), Is.EqualTo("Light is turned on\r\nPowerTube works with 50 W\r\n"));
       }
 
-        [Test]
-        public void OutputLine_StartIsPressedAndWaitedOneSec_LogLineIsCalled()
-        {
-            //Arrange
-           
-            var output = new StringWriter();
-            
-            //Act
-            _powerButton.Press();
-            _timeButton.Press();
-            Console.SetOut(output);
-            _startCancelButton.Press();
-            Thread.Sleep(2000);
-            
+
+      [Test]
+      public void OutputLine_CookingIsDone_LogLineIsCalled()
+      {
+         //Arrange
+         var output = new StringWriter();
 
 
+         //Act
+         _powerButton.Press();
+         _timeButton.Press();
+         _startCancelButton.Press();
 
-            //Assert
-            Assert.That(output.ToString(), Is.EqualTo("Light is turned on\r\nPowerTube works with 50 W\r\n" +
-                                                      "Display shows: 00:59 min\r\n"));
-        }
+         Console.SetOut(output);
+         faketimer.Expired += Raise.Event();
 
-        [Test]
-        public void OutputLine_CookingIsDone_LogLineIsCalled()
-        {
-            //Arrange
-            var output = new StringWriter();
+         string outputstring = output.ToString();
+         //Sammenlign med output..
+         //Assert
+         Assert.That(outputstring.Contains("PowerTube turned off") && outputstring.Contains("Display cleared") &&
+                     outputstring.Contains("Light is turned off"));
+
+      }
+      [Test]
+      public void OutputLine_DoorOpenedWhenSettingPower_LogLineIsCalled()
+      {
+         //Arrange
+         var output = new StringWriter();
+
+         //Act
+         _powerButton.Press();
+         Console.SetOut(output);
+         _door.Open();
+
+         //Assert
+         Assert.That(output.ToString(), Is.EqualTo("Light is turned on\r\nDisplay cleared\r\n"));
+      }
+      [Test]
+      public void OutputLine_DoorOpenedWhenSettingTime_LogLineIsCalled()
+      {
+         //Arrange
+
+         var output = new StringWriter();
 
 
-            //Act
-            _powerButton.Press();
-            _timeButton.Press();
-            _startCancelButton.Press();
-            Thread.Sleep(65000);
-            Console.SetOut(output);
-            string outputstring = output.ToString();
-            //Sammenlign med output..
-            //Assert
-            Assert.That(outputstring.Contains("PowerTube turned off"+  "Display cleared" + "Light is turned off"));
-        }
-        [Test]
-        public void OutputLine_DoorOpenedWhenSettingPower_LogLineIsCalled()
-        {
-            //Arrange
-           
-            var output = new StringWriter();
-            
+         //Act
+         _powerButton.Press();
+         _timeButton.Press();
+         Console.SetOut(output);
+         _door.Open();
 
-            //Act
-            _powerButton.Press();
-            Console.SetOut(output);
-            _door.Open();
+         //Assert
+         Assert.That(output.ToString(), Is.EqualTo("Light is turned on\r\nDisplay cleared\r\n"));
+      }
 
-            //Assert
-            Assert.That(output.ToString(),Is.EqualTo("Light is turned on\r\nDisplay cleared\r\n"));
-        }
-        [Test]
-        public void OutputLine_DoorOpenedWhenSettingTime_LogLineIsCalled()
-        {
-            //Arrange
-           
-            var output = new StringWriter();
-            
+      [Test]
+      public void OutputLine_DoorIsOpenedWhileCooking_LogLineIsCalled()
+      {
+         //Arrange
+         var output = new StringWriter();
 
-            //Act
-            _powerButton.Press();
-            _timeButton.Press();
-            Console.SetOut(output);
-            _door.Open();
 
-            //Assert
-            Assert.That(output.ToString(), Is.EqualTo("Light is turned on\r\nDisplay cleared\r\n"));
-        }
-
-        [Test]
-        public void OutputLine_DoorIsOpenedWhileCooking_LogLineIsCalled()
-        {
-            //Arrange
-            var output = new StringWriter();
-            
-
-            //Act
-            _powerButton.Press();
-            _timeButton.Press();
-            _startCancelButton.Press();
-            Console.SetOut(output);
-            _door.Open();
+         //Act
+         _powerButton.Press();
+         _timeButton.Press();
+         _startCancelButton.Press();
+         Console.SetOut(output);
+         _door.Open();
 
          //Assert
          Assert.That(output.ToString(), Is.EqualTo("PowerTube turned off\r\nDisplay cleared\r\n"));
       }
 
-        [Test]
-        public void OutputLine_CancelIsPressedWhileCooking_LogLineIsCalled()
-        {
-            //Arrange
-            
-            
-            var output = new StringWriter();
-           
+      [Test]
+      public void OutputLine_CancelIsPressedWhileCooking_LogLineIsCalled()
+      {
+         //Arrange
 
-            //Act
-            _powerButton.Press();
-            _timeButton.Press();
-            _startCancelButton.Press();
-            Thread.Sleep(5000); //Der laves mad
-            Console.SetOut(output);
-            _startCancelButton.Press();
+
+         var output = new StringWriter();
+
+
+         //Act
+         _powerButton.Press();
+         _timeButton.Press();
+         _startCancelButton.Press();
+
+         faketimer.TimerTick += Raise.Event();
+         faketimer.TimerTick += Raise.Event();
+         faketimer.TimerTick += Raise.Event();
+         faketimer.TimerTick += Raise.Event();
+         faketimer.TimerTick += Raise.Event();
+
+         Console.SetOut(output);
+         _startCancelButton.Press();
 
          //Assert
          Assert.That(output.ToString(), Is.EqualTo("PowerTube turned off\r\nLight is turned off\r\nDisplay cleared\r\n"));
