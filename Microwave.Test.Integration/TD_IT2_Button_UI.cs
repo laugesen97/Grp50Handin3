@@ -38,8 +38,6 @@ namespace Microwave.Test.Integration
       [Test]
       public void Press_PowerButtonPressedByUser_ShowPowerIsCalled()
       {
-         //Arrange
-
          //Act
          powerButton.Press();
 
@@ -51,8 +49,6 @@ namespace Microwave.Test.Integration
       [Test]
       public void Press_TimeButtonPressedByUser_ShowTimeIsCalled()
       {
-         //Arrange
-
          //Act
          powerButton.Press();
 
@@ -65,8 +61,6 @@ namespace Microwave.Test.Integration
       [Test]
       public void Press_StartButtonPressedByUser_StartIsCalled()
       {
-         //Arrange
-
          //Act
          powerButton.Press();
 
@@ -81,8 +75,6 @@ namespace Microwave.Test.Integration
       [Test]
       public void Press_cancelButtonPressedByUser_CanceledIsCalled()
       {
-          //Arrange
-
           //Act
           powerButton.Press();
 
@@ -99,8 +91,6 @@ namespace Microwave.Test.Integration
       [Test]
       public void Press_StartButtonPressedByUser_StartCookingIsCalled()
       {
-          //Arrange
-
           //Act
           powerButton.Press();
 
@@ -116,8 +106,6 @@ namespace Microwave.Test.Integration
       [Test]
       public void Press_CancelButtonPressedByUser_StopIsCalled()
       {
-          //Arrange
-
           //Act
           powerButton.Press();
 

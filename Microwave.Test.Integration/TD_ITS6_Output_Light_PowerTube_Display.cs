@@ -62,11 +62,13 @@ namespace Microwave.Test.Integration
         public void OutputLine_DoorIsOpenedAndClosed_LogLineIsCalled()
         {
             //Arrange
-            _door.Open();
+          
             var output = new StringWriter();
-            Console.SetOut(output);
+            
 
             //Act
+            _door.Open();
+            Console.SetOut(output);
             _door.Close();
 
             //Assert
@@ -91,11 +93,13 @@ namespace Microwave.Test.Integration
         public void OutputLine_TimeButtonIsPressed_LogLineIsCalled()
         {
             //Arrange
-            _powerButton.Press();
+          
             var output = new StringWriter();
-            Console.SetOut(output);
+          
 
             //Act
+            _powerButton.Press();
+            Console.SetOut(output);
             _timeButton.Press();
 
 
@@ -107,12 +111,14 @@ namespace Microwave.Test.Integration
         public void OutputLine_StartCancelButtonIsPressed_LogLineIsCalled()
         {
             //Arrange
-            _powerButton.Press();
-            _timeButton.Press();
+            
             var output = new StringWriter();
-            Console.SetOut(output);
+           
 
             //Act
+            _powerButton.Press();
+            _timeButton.Press();
+            Console.SetOut(output);
             _startCancelButton.Press();
 
 
@@ -124,14 +130,17 @@ namespace Microwave.Test.Integration
         public void OutputLine_StartIsPressedAndWaitedOneSec_LogLineIsCalled()
         {
             //Arrange
+           
+            var output = new StringWriter();
+            
+            //Act
             _powerButton.Press();
             _timeButton.Press();
-            var output = new StringWriter();
             Console.SetOut(output);
-
-            //Act
             _startCancelButton.Press();
             Thread.Sleep(2000);
+            
+
 
 
             //Assert
@@ -143,28 +152,31 @@ namespace Microwave.Test.Integration
         public void OutputLine_CookingIsDone_LogLineIsCalled()
         {
             //Arrange
-            _powerButton.Press();
-            _timeButton.Press();
-           
+            var output = new StringWriter();
+
 
             //Act
+            _powerButton.Press();
+            _timeButton.Press();
             _startCancelButton.Press();
-            Thread.Sleep(60500);
-            var output = new StringWriter();
+            Thread.Sleep(65000);
             Console.SetOut(output);
             string outputstring = output.ToString();
             //Sammenlign med output..
-            Assert.That(outputstring.Contains("PowerTube turned off\r\nDisplay cleared\r\nLight turned off\r\n"));
+            //Assert
+            Assert.That(outputstring.Contains("PowerTube turned off"+  "Display cleared" + "Light is turned off"));
         }
         [Test]
         public void OutputLine_DoorOpenedWhenSettingPower_LogLineIsCalled()
         {
             //Arrange
-            _powerButton.Press();
+           
             var output = new StringWriter();
-            Console.SetOut(output);
+            
 
             //Act
+            _powerButton.Press();
+            Console.SetOut(output);
             _door.Open();
 
             //Assert
@@ -174,13 +186,16 @@ namespace Microwave.Test.Integration
         public void OutputLine_DoorOpenedWhenSettingTime_LogLineIsCalled()
         {
             //Arrange
+           
+            var output = new StringWriter();
+            
+
+            //Act
             _powerButton.Press();
             _timeButton.Press();
-            var output = new StringWriter();
             Console.SetOut(output);
-            
-            //Act
             _door.Open();
+
             //Assert
             Assert.That(output.ToString(), Is.EqualTo("Light is turned on\r\nDisplay cleared\r\n"));
         }
@@ -189,13 +204,14 @@ namespace Microwave.Test.Integration
         public void OutputLine_DoorIsOpenedWhileCooking_LogLineIsCalled()
         {
             //Arrange
+            var output = new StringWriter();
+            
+
+            //Act
             _powerButton.Press();
             _timeButton.Press();
             _startCancelButton.Press();
-            var output = new StringWriter();
             Console.SetOut(output);
-
-            //Act
             _door.Open();
 
             //Assert
@@ -206,15 +222,17 @@ namespace Microwave.Test.Integration
         public void OutputLine_CancelIsPressedWhileCooking_LogLineIsCalled()
         {
             //Arrange
+            
+            
+            var output = new StringWriter();
+           
+
+            //Act
             _powerButton.Press();
             _timeButton.Press();
             _startCancelButton.Press();
             Thread.Sleep(5000); //Der laves mad
-            
-            var output = new StringWriter();
             Console.SetOut(output);
-
-            //Act
             _startCancelButton.Press();
 
             //Assert

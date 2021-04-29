@@ -62,8 +62,6 @@ namespace Microwave.Test.Integration
         [Test]
         public void OpensDoor_ExtensionDoorOpenedWhileCooking_Stop()
         {
-            //Arrange
-
             //Act
             fakePowerButton.Press();
 
