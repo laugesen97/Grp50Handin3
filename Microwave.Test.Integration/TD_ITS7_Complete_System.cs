@@ -134,10 +134,12 @@ namespace Microwave.Test.Integration
 
          Thread.Sleep(1100);
 
-
          //Assert
-         Assert.That(output.ToString(), Is.EqualTo("Light is turned on\r\nPowerTube works with 50 W\r\n" +
-                                                   "Display shows: 00:59 min\r\n"));
+         string outputstring = output.ToString();
+
+         //Sammenlign med output..
+         Assert.That(outputstring.Contains("Light is turned on") && outputstring.Contains("PowerTube works with 50 W") &&
+                     outputstring.Contains("Display shows: 00:59 min"));
       }
 
       [Test]
