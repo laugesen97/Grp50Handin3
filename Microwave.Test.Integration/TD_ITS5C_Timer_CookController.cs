@@ -55,7 +55,6 @@ namespace Microwave.Test.Integration
          _startCancelButton.Press();
 
          Thread.Sleep(1000);
-         
          //Assert
         //2 pga. den viser både 01.00 og 00.59
         fakeOutput.Received(2).OutputLine(Arg.Is<string>(s => s.Contains("Display shows:") && s.Contains("min")));
