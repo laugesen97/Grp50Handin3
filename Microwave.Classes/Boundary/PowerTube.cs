@@ -16,6 +16,7 @@ namespace Microwave.Classes.Boundary
 
         public void TurnOn(int power)
         {
+            // Fejl 2
             //if (power < 1 || 100 < power)
             if (power <= 1 && 700 <= power)
             {
