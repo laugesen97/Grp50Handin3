@@ -36,7 +36,7 @@ namespace Microwave.Test.Integration
             sut = new Light(fakeOutput);
 
             _cookController = new CookController(fakeTimer, fakeDisplay, fakepowerTube);
-            _UI = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, fakeDisplay, sut,_cookController);
+            _UI = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, fakeDisplay, sut, _cookController);
 
             _cookController.UI = _UI;
         }
@@ -69,10 +69,6 @@ namespace Microwave.Test.Integration
         [Test]
         public void Outout_CookingIsStarted_LogLineIsCalled()
         {
-            //Navngivningen af metoden skal vi have kigget på. :)
-
-            //Arrange
-
             //Act
             _powerButton.Press();
 
@@ -80,16 +76,13 @@ namespace Microwave.Test.Integration
 
             _startCancelButton.Press();
 
+            //Assert
             //fakeOutput.Received(1).OutputLine("Light is turned on");
             fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("turned on")));
         }
         [Test]
         public void Outout_CancelPressedWhileCooking_LogLineIsCalled()
         {
-            //Navngivningen af metoden skal vi have kigget på. :)
-
-            //Arrange
-
             //Act
             _powerButton.Press();
 
@@ -99,6 +92,7 @@ namespace Microwave.Test.Integration
 
             _startCancelButton.Press();
 
+            //Assert
             //fakeOutput.Received(1).OutputLine("Light is turned off");
             fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("turned off")));
         }

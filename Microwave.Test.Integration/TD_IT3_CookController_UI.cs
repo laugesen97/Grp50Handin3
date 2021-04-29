@@ -8,331 +8,312 @@ using NUnit.Framework;
 
 namespace Microwave.Test.Integration
 {
-   [TestFixture]
-   public class TD_IT3_CookController_UI
-   {
-      private IButton _powerButton;
-      private IButton _timeButton;
-      private IButton _startCancelButton;
-      private IDoor _door;
-      private IDisplay fakeDisplay;
-      private ILight fakeLight;
-      private CookController sut;
-      private IUserInterface _UI;
-      private IPowerTube fakepowerTube;
-      private ITimer fakeTimer;
+    [TestFixture]
+    public class TD_IT3_CookController_UI
+    {
+        private IButton _powerButton;
+        private IButton _timeButton;
+        private IButton _startCancelButton;
+        private IDoor _door;
+        private IDisplay fakeDisplay;
+        private ILight fakeLight;
+        private CookController sut;
+        private IUserInterface _UI;
+        private IPowerTube fakepowerTube;
+        private ITimer fakeTimer;
+
+        [SetUp]
+        public void Setup()
+        {
+            _powerButton = new Button();
+            _timeButton = new Button();
+            _startCancelButton = new Button();
+            _door = new Door();
 
-      [SetUp]
-      public void Setup()
-      {
-         _powerButton = new Button();
-         _timeButton = new Button();
-         _startCancelButton = new Button();
-         _door = new Door();
+            fakeDisplay = Substitute.For<IDisplay>();
+            fakeLight = Substitute.For<ILight>();
+            fakeTimer = Substitute.For<ITimer>();
+            fakepowerTube = Substitute.For<IPowerTube>();
 
-         fakeDisplay = Substitute.For<IDisplay>();
-         fakeLight = Substitute.For<ILight>();
-         fakeTimer = Substitute.For<ITimer>();
-         fakepowerTube = Substitute.For<IPowerTube>();
+            sut = new CookController(fakeTimer, fakeDisplay, fakepowerTube);
+            _UI = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, fakeDisplay, fakeLight, sut);
 
-         sut = new CookController(fakeTimer, fakeDisplay, fakepowerTube);
-         _UI = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, fakeDisplay, fakeLight, sut);
+            sut.UI = _UI;
+        }
 
-         sut.UI = _UI;
-      }
+        [Test]
+        public void Timer_CookingIsStarted_StartIsCalled()
+        {
+            //Act
+            _powerButton.Press();
 
-      [Test]
-      public void Timer_CookingIsStarted_StartIsCalled()
-      {
-         //Navngivningen af metoden skal vi have kigget på. :)
+            _timeButton.Press();
 
-         //Arrange
+            _startCancelButton.Press();
 
-         //Act
-         _powerButton.Press();
+            //Assert
+            //60 kendes igen fra tidligere White Box undersøgelse..
+            fakeTimer.Received(1).Start(60);
+        }
 
-         _timeButton.Press();
+        [Test]
+        public void Timer_CookingIsStarted2_StartIsCalled()
+        {
+            //Act
+            _powerButton.Press();
 
-         _startCancelButton.Press();
+            _timeButton.Press();
 
-         //60 kendes igen fra tidligere White Box undersøgelse..
-         fakeTimer.Received(1).Start(60);
-      }
+            _timeButton.Press();
 
-      [Test]
-      public void Timer_CookingIsStarted2_StartIsCalled()
-      {
-         //Navngivningen af metoden skal vi have kigget på. :)
+            _startCancelButton.Press();
 
-         //Arrange
+            //Assert
+            //60 kendes igen fra tidligere White Box undersøgelse..
+            fakeTimer.Received(1).Start(120);
+        }
 
-         //Act
-         _powerButton.Press();
+        [Test]
+        public void Timer_CookingIsStarted3_StartIsCalled()
+        {
 
-         _timeButton.Press();
+            //Act
+            _powerButton.Press();
 
-         _timeButton.Press();
+            _timeButton.Press();
 
-         _startCancelButton.Press();
+            _timeButton.Press();
 
-         //60 kendes igen fra tidligere White Box undersøgelse..
-         fakeTimer.Received(1).Start(120);
-      }
+            _timeButton.Press();
 
-      [Test]
-      public void Timer_CookingIsStarted3_StartIsCalled()
-      {
-         //Navngivningen af metoden skal vi have kigget på. :)
+            _startCancelButton.Press();
 
-         //Arrange
+            //Assert
+            //60 kendes igen fra tidligere White Box undersøgelse..
+            fakeTimer.Received(1).Start(180);
+        }
 
-         //Act
-         _powerButton.Press();
+        [Test]
+        public void Timer_CookingIsStarted_StartIsNotCalled()
+        {
+            //Act
+            _powerButton.Press();
 
-         _timeButton.Press();
+            _timeButton.Press();
 
-         _timeButton.Press();
+            _startCancelButton.Press();
 
-         _timeButton.Press();
+            //Assert
+            fakeTimer.Received(0).Start(30);
+        }
 
-         _startCancelButton.Press();
+        [Test]
+        public void PowerTube_CookingIsStarted_TurnOnIsCalled()
+        {
+            //Act
+            _powerButton.Press();
 
-         //60 kendes igen fra tidligere White Box undersøgelse..
-         fakeTimer.Received(1).Start(180);
-      }
+            _timeButton.Press();
 
-      [Test]
-      public void Timer_CookingIsStarted_StartIsNotCalled()
-      {
-         //Navngivningen af metoden skal vi have kigget på. :)
+            _startCancelButton.Press();
 
-         //Arrange
+            //Assert
+            //50 kendes igen fra tidligere White Box undersøgelse..
+            fakepowerTube.Received(1).TurnOn(50);
+        }
 
-         //Act
-         _powerButton.Press();
+        [Test]
+        public void PowerTube_CookingIsStarted2_TurnOnIsCalled()
+        {
+            //Navngivningen af metoden skal vi have kigget på. :)
 
-         _timeButton.Press();
+            //Arrange
 
-         _startCancelButton.Press();
+            //Act
+            _powerButton.Press();
 
-         //Assert
-         fakeTimer.Received(0).Start(30);
-      }
+            _powerButton.Press();
 
-      [Test]
-      public void PowerTube_CookingIsStarted_TurnOnIsCalled()
-      {
-         //Navngivningen af metoden skal vi have kigget på. :)
+            _timeButton.Press();
 
-         //Arrange
+            _startCancelButton.Press();
 
-         //Act
-         _powerButton.Press();
+            //50 kendes igen fra tidligere White Box undersøgelse..
+            fakepowerTube.Received(1).TurnOn(100);
+        }
 
-         _timeButton.Press();
+        [Test]
+        public void PowerTube_CookingIsStarted3_TurnOnIsCalled()
+        {
+            //Navngivningen af metoden skal vi have kigget på. :)
 
-         _startCancelButton.Press();
+            //Arrange
 
-         //50 kendes igen fra tidligere White Box undersøgelse..
-         fakepowerTube.Received(1).TurnOn(50);
-      }
+            //Act
+            _powerButton.Press();
 
-      [Test]
-      public void PowerTube_CookingIsStarted2_TurnOnIsCalled()
-      {
-         //Navngivningen af metoden skal vi have kigget på. :)
+            _powerButton.Press();
 
-         //Arrange
+            _powerButton.Press();
 
-         //Act
-         _powerButton.Press();
+            _timeButton.Press();
 
-         _powerButton.Press();
+            _startCancelButton.Press();
 
-         _timeButton.Press();
+            //50 kendes igen fra tidligere White Box undersøgelse..
+            fakepowerTube.Received(1).TurnOn(150);
+        }
 
-         _startCancelButton.Press();
+        [Test]
+        public void Display_Cooked1Minuted_ShowTimeCalled60Times()
+        {
+            //Navngivningen af metoden skal vi have kigget på. :)
 
-         //50 kendes igen fra tidligere White Box undersøgelse..
-         fakepowerTube.Received(1).TurnOn(100);
-      }
+            //Arrange
 
-      [Test]
-      public void PowerTube_CookingIsStarted3_TurnOnIsCalled()
-      {
-         //Navngivningen af metoden skal vi have kigget på. :)
+            //Act
+            _powerButton.Press();
 
-         //Arrange
+            _timeButton.Press();
 
-         //Act
-         _powerButton.Press();
+            _startCancelButton.Press();
 
-         _powerButton.Press();
+            //60 kendes igen fra tidligere White Box undersøgelse..
+            fakeDisplay.Received(1).ShowTime(1, 0);
+        }
 
-         _powerButton.Press();
+        [Test]
+        public void Timer_DoorOpens_StopIsCalled()
+        {
+            //Navngivningen af metoden skal vi have kigget på. :)
 
-         _timeButton.Press();
+            //Arrange
 
-         _startCancelButton.Press();
+            //Act
+            _powerButton.Press();
 
-         //50 kendes igen fra tidligere White Box undersøgelse..
-         fakepowerTube.Received(1).TurnOn(150);
-      }
+            _timeButton.Press();
 
-      [Test]
-      public void Display_Cooked1Minuted_ShowTimeCalled60Times()
-      {
-         //Navngivningen af metoden skal vi have kigget på. :)
+            _startCancelButton.Press();
 
-         //Arrange
+            _door.Open();
 
-         //Act
-         _powerButton.Press();
+            fakeTimer.Received(1).Stop();
+        }
 
-         _timeButton.Press();
+        [Test]
+        public void Timer_CancelPressed_StopIsCalled()
+        {
+            //Navngivningen af metoden skal vi have kigget på. :)
 
-         _startCancelButton.Press();
+            //Arrange
 
-         //60 kendes igen fra tidligere White Box undersøgelse..
-         fakeDisplay.Received(1).ShowTime(1, 0);
-      }
+            //Act
+            _powerButton.Press();
 
-      [Test]
-      public void Timer_DoorOpens_StopIsCalled()
-      {
-         //Navngivningen af metoden skal vi have kigget på. :)
+            _timeButton.Press();
 
-         //Arrange
+            _startCancelButton.Press();
 
-         //Act
-         _powerButton.Press();
+            _startCancelButton.Press();
 
-         _timeButton.Press();
+            fakeTimer.Received(1).Stop();
+        }
 
-         _startCancelButton.Press();
+        [Test]
+        public void PowerTube_DoorOpens_TurnOffIsCalled()
+        {
+            //Navngivningen af metoden skal vi have kigget på. :)
 
-         _door.Open();
+            //Arrange
 
-         fakeTimer.Received(1).Stop();
-      }
+            //Act
+            _powerButton.Press();
 
-      [Test]
-      public void Timer_CancelPressed_StopIsCalled()
-      {
-         //Navngivningen af metoden skal vi have kigget på. :)
+            _timeButton.Press();
 
-         //Arrange
+            _startCancelButton.Press();
 
-         //Act
-         _powerButton.Press();
+            _door.Open();
 
-         _timeButton.Press();
+            //Assert
+            fakepowerTube.Received(1).TurnOff();
+        }
 
-         _startCancelButton.Press();
+        [Test]
+        public void PowerTube_CancelPressed_TurnOffIsCalled()
+        {
+            //Navngivningen af metoden skal vi have kigget på. :)
 
-         _startCancelButton.Press();
+            //Arrange
 
-         fakeTimer.Received(1).Stop();
-      }
+            //Act
+            _powerButton.Press();
 
-      [Test]
-      public void PowerTube_DoorOpens_TurnOffIsCalled()
-      {
-         //Navngivningen af metoden skal vi have kigget på. :)
+            _timeButton.Press();
 
-         //Arrange
+            _startCancelButton.Press();
 
-         //Act
-         _powerButton.Press();
+            _startCancelButton.Press();
 
-         _timeButton.Press();
+            //Assert
+            fakepowerTube.Received(1).TurnOff();
+        }
 
-         _startCancelButton.Press();
+        [Test]
+        public void PowerTube_TimeHaveTicked_TurnOffIsCalled()
+        {
+            //Navngivningen af metoden skal vi have kigget på. :)
 
-         _door.Open();
+            //Arrange
 
-         //Assert
-         fakepowerTube.Received(1).TurnOff();
-      }
+            //Act
+            _powerButton.Press();
 
-      [Test]
-      public void PowerTube_CancelPressed_TurnOffIsCalled()
-      {
-         //Navngivningen af metoden skal vi have kigget på. :)
+            _timeButton.Press();
 
-         //Arrange
+            _startCancelButton.Press();
 
-         //Act
-         _powerButton.Press();
+            fakeTimer.Expired += Raise.Event();
 
-         _timeButton.Press();
+            //Assert
+            fakepowerTube.Received(1).TurnOff();
+        }
 
-         _startCancelButton.Press();
+        [Test]
+        public void Light_TimeHaveTicked_TurnOffIsCalled()
+        {
+            //Navngivningen af metoden skal vi have kigget på. :)
 
-         _startCancelButton.Press();
+            //Arrange
 
-         //Assert
-         fakepowerTube.Received(1).TurnOff();
-      }
+            //Act
+            _powerButton.Press();
 
-      [Test]
-      public void PowerTube_TimeHaveTicked_TurnOffIsCalled()
-      {
-         //Navngivningen af metoden skal vi have kigget på. :)
+            _timeButton.Press();
 
-         //Arrange
+            _startCancelButton.Press();
 
-         //Act
-         _powerButton.Press();
+            fakeTimer.Expired += Raise.Event();
 
-         _timeButton.Press();
+            //Assert
+            fakeLight.Received(1).TurnOff();
+        }
 
-         _startCancelButton.Press();
+        [Test]
+        public void Display_TimeHaveTicked_ClearIsCalled()
+        {
+            //Act
+            _powerButton.Press();
 
-         fakeTimer.Expired += Raise.Event();
+            _timeButton.Press();
 
-         //Assert
-         fakepowerTube.Received(1).TurnOff();
-      }
+            _startCancelButton.Press();
 
-      [Test]
-      public void Light_TimeHaveTicked_TurnOffIsCalled()
-      {
-         //Navngivningen af metoden skal vi have kigget på. :)
+            fakeTimer.Expired += Raise.Event();
 
-         //Arrange
-
-         //Act
-         _powerButton.Press();
-
-         _timeButton.Press();
-
-         _startCancelButton.Press();
-
-         fakeTimer.Expired += Raise.Event();
-
-         //Assert
-         fakeLight.Received(1).TurnOff();
-      }
-
-      [Test]
-      public void Display_TimeHaveTicked_ClearIsCalled()
-      {
-         //Navngivningen af metoden skal vi have kigget på. :)
-
-         //Arrange
-
-         //Act
-         _powerButton.Press();
-
-         _timeButton.Press();
-
-         _startCancelButton.Press();
-
-         fakeTimer.Expired += Raise.Event();
-
-         //Assert
-         fakeDisplay.Received(1).Clear();
-      }
-   }
+            //Assert
+            fakeDisplay.Received(1).Clear();
+        }
+    }
 }
