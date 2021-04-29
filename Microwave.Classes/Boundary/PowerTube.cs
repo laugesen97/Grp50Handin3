@@ -18,7 +18,7 @@ namespace Microwave.Classes.Boundary
         {
             // Fejl 2
             //if (power < 1 || 100 < power)
-            if (power <= 1 && 700 <= power)
+            if (power < 1 || 700 < power)
             {
                 throw new ArgumentOutOfRangeException("power", power, "Must be between 1 and 700 (incl.)");
             }

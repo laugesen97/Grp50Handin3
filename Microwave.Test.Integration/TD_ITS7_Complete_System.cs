@@ -11,7 +11,7 @@ using Timer = Microwave.Classes.Boundary.Timer;
 namespace Microwave.Test.Integration
 {
    [TestFixture]
-   public class TD_ITS6_Output_Light_PowerTube_Display
+   public class TD_ITS7_Complete_System
    {
       private IButton _powerButton;
       private IButton _timeButton;
@@ -22,25 +22,23 @@ namespace Microwave.Test.Integration
       private ICookController _cookController;
       private IUserInterface _UI;
       private IPowerTube powerTube;
-      private ITimer faketimer;
+      private ITimer timer;
       private IOutput sut;
 
       [SetUp]
       public void Setup()
       {
-         faketimer = Substitute.For<ITimer>();
-
          sut = new Output();
          _powerButton = new Button();
          _timeButton = new Button();
          _startCancelButton = new Button();
          _door = new Door();
-         
          display = new Display(sut);
          light = new Light(sut);
          powerTube = new PowerTube(sut);
+         timer = new Timer();
 
-         _cookController = new CookController(faketimer, display, powerTube);
+         _cookController = new CookController(timer, display, powerTube);
          _UI = new UserInterface(_powerButton, _timeButton, _startCancelButton, _door, display, light, _cookController);
 
          _cookController.UI = _UI;
@@ -145,26 +143,24 @@ namespace Microwave.Test.Integration
       public void OutputLine_CookingIsDone_LogLineIsCalled()
       {
          //Arrange
-         var output = new StringWriter();
 
          //Act
          _powerButton.Press();
 
          _timeButton.Press();
 
-         Console.SetOut(output);
          _startCancelButton.Press();
 
-         faketimer.Expired += Raise.Event();
-         
-         //Console.SetOut(output);
+         var output = new StringWriter();
+         Thread.Sleep(60500);
+
+         Console.SetOut(output);
 
          string outputstring = output.ToString();
 
          //Sammenlign med output..
-         Assert.That(outputstring.Contains("PowerTube turned off")); //"\r\nDisplay cleared\r\nLight turned off\r\n"));
+         Assert.That(outputstring.Contains("PowerTube turned off\r\nDisplay cleared\r\nLight turned off\r\n"));
       }
-
       [Test]
       public void OutputLine_DoorOpenedWhenSettingPower_LogLineIsCalled()
       {
