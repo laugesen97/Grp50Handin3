@@ -131,8 +131,8 @@ namespace Microwave.Test.Integration
          _timeButton.Press();
          Console.SetOut(output);
          _startCancelButton.Press();
-         
-         Thread.Sleep(1200);
+
+         Thread.Sleep(1100);
 
 
          //Assert
