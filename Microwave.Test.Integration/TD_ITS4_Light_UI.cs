@@ -50,6 +50,7 @@ namespace Microwave.Test.Integration
             //Assert
             //Vi kender outputline med vores "White Box" briller
             //fakeOutput.Received(1).OutputLine("Light is turned on");
+
             //Vi tager turned on med her, så den er mere robut, men stadig forskellig fra TurnOff()
             fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("turned on")));
         }
@@ -63,6 +64,7 @@ namespace Microwave.Test.Integration
             //Assert
             //Vi kender outputline med vores "White Box" briller
             //fakeOutput.Received(1).OutputLine("Light is turned off");
+
             //Vi tager turned off med her, så den er mere robut, men stadig forskellig fra TurnOn()
             fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("turned off")));
         }
@@ -78,6 +80,7 @@ namespace Microwave.Test.Integration
 
             //Assert
             //fakeOutput.Received(1).OutputLine("Light is turned on");
+
             fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("turned on")));
         }
         [Test]
@@ -94,6 +97,7 @@ namespace Microwave.Test.Integration
 
             //Assert
             //fakeOutput.Received(1).OutputLine("Light is turned off");
+
             fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("turned off")));
         }
 

@@ -64,7 +64,6 @@ namespace Microwave.Test.Integration
       public void OutputLine_DoorIsOpenedAndClosed_LogLineIsCalled()
       {
          //Arrange
-
          var output = new StringWriter();
 
 

@@ -59,6 +59,18 @@ namespace Microwave.Test.Integration
       }
 
       [Test]
+      public void Press_CancelButtonPressedByUserBeforeTimeButton_Cancel()
+      {
+          //Act
+          powerButton.Press();
+
+          startCancelButton.Press();
+
+          //Assert
+          fakeDisplay.Received(1).Clear();
+        }
+
+      [Test]
       public void Press_StartButtonPressedByUser_StartIsCalled()
       {
          //Act
@@ -73,7 +85,7 @@ namespace Microwave.Test.Integration
       }
 
       [Test]
-      public void Press_cancelButtonPressedByUser_CanceledIsCalled()
+      public void Press_CancelButtonPressedByUser_CancelIsCalled()
       {
           //Act
           powerButton.Press();
@@ -99,7 +111,7 @@ namespace Microwave.Test.Integration
           startCancelButton.Press();
 
           //Assert
-          //50 og 1 kender vi, da vi har kigget med "White box" øjne
+          //50 og 60 kender vi, da vi har kigget med "White box" øjne
           fakeCooker.Received(1).StartCooking(50,60);
         }
 

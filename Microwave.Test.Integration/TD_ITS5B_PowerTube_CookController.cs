@@ -116,13 +116,13 @@ namespace Microwave.Test.Integration
             _startCancelButton.Press();
 
             //Assert
-            fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("PowerTube works with") && s.Contains("W")));
+            fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("PowerTube works with") && s.Contains("250 W")));
         }
         [Test]
-        public void Output_PowerButtonPressed5Times_CookingWith700W()
+        public void Output_PowerButtonPressed14Times_CookingWith700W()
         {
             //Act
-            for (int i = 0; i < 13; i++)
+            for (int i = 0; i < 14; i++)
             {
                 _powerButton.Press();
             }
@@ -131,7 +131,7 @@ namespace Microwave.Test.Integration
             _startCancelButton.Press();
 
             //Assert
-            fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("PowerTube works with") && s.Contains("W")));
+            fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("PowerTube works with") && s.Contains("700 W")));
         }
     }
 }

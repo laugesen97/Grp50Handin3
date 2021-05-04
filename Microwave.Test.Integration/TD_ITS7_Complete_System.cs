@@ -217,7 +217,7 @@ namespace Microwave.Test.Integration
          _powerButton.Press();
          _timeButton.Press();
          _startCancelButton.Press();
-         Thread.Sleep(5200); //Der laves mad
+         Thread.Sleep(5200);
 
          var output = new StringWriter();
          Console.SetOut(output);

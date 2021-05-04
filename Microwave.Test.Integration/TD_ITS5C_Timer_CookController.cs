@@ -76,21 +76,5 @@ namespace Microwave.Test.Integration
          fakeOutput.Received(61).OutputLine(Arg.Is<string>(s =>s.Contains("Display shows:") && s.Contains("min")));
          fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("PowerTube turned off")));
       }
-
-      [Test]
-      public void Output_TurnOffPowerTubeByOpenDoor_LogLineIsCalled()
-      {
-         //Act
-         _powerButton.Press();
-
-         _timeButton.Press();
-
-         _startCancelButton.Press();
-
-         _door.Open();
-
-         //Assert
-         fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("PowerTube turned off")));
-      }
    }
 }

@@ -51,6 +51,7 @@ namespace Microwave.Test.Integration
             //Assert
             //Vi kender outputline med vores "White Box" briller
             //fakeOutput.Received(1).OutputLine("Display shows: 50 W");
+
             //Vi tager turned on med her, så den er mere robut, men stadig forskellig fra TurnOff()
             fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("Display shows:") && s.Contains("W")));
         }
@@ -65,13 +66,15 @@ namespace Microwave.Test.Integration
 
             //Assert
             //Vi kender outputline med vores "White Box" briller
-            fakeOutput.Received(1).OutputLine("Display shows: 01:00 min");
+            //fakeOutput.Received(1).OutputLine("Display shows: 01:00 min");
+
             //Vi tager turned off med her, så den er mere robut, men stadig forskellig fra TurnOn()
             fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("Display shows:") && s.Contains("min")));
         }
 
+
         [Test]
-        public void Outout_CookingAndDoorOpened_LogLineIsCalled()
+        public void Outout_DoorOpenedWhileCooking_LogLineIsCalled()
         {
             //Act
             _powerButton.Press();
@@ -128,5 +131,29 @@ namespace Microwave.Test.Integration
             //Assert
             fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("Display cleared")));
         }
+
+        [Test]
+        public void Output_DoorOpenedWhileSettingPower_ClearIsCalled()
+        {
+            //Act
+            _powerButton.Press();
+            _door.Open();
+
+            //Assert
+            fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("Display cleared")));
+        }
+
+        [Test]
+        public void Output_DoorOpenedWhileSettingTime_ClearIsCalled()
+        {
+            //Act
+            _powerButton.Press();
+            _timeButton.Press();
+            _door.Open();
+
+            //Assert
+            fakeOutput.Received(1).OutputLine(Arg.Is<string>(s => s.Contains("Display cleared")));
+        }
+
     }
 }

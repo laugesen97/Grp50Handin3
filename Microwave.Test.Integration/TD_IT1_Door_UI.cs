@@ -64,7 +64,6 @@ namespace Microwave.Test.Integration
         {
             //Act
             fakePowerButton.Press();
-
             _sut.Open();
 
             //Assert
@@ -77,7 +76,6 @@ namespace Microwave.Test.Integration
         {
             //Act
             fakePowerButton.Press();
-
             fakeTimeButton.Press();
 
             _sut.Open();

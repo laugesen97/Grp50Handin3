@@ -42,7 +42,7 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void Timer_CookingIsStarted_StartIsCalled()
+        public void Timer_CookingIsStartedWith60Sec_StartIsCalled()
         {
             //Act
             _powerButton.Press();
@@ -52,12 +52,12 @@ namespace Microwave.Test.Integration
             _startCancelButton.Press();
 
             //Assert
-            //60 kendes igen fra tidligere White Box undersøgelse..
+            //60 kendes igen fra tidligere White Box undersøgelse.
             fakeTimer.Received(1).Start(60);
         }
 
         [Test]
-        public void Timer_CookingIsStarted2_StartIsCalled()
+        public void Timer_CookingIsStartedWith120Sec_StartIsCalled()
         {
             //Act
             _powerButton.Press();
@@ -69,12 +69,12 @@ namespace Microwave.Test.Integration
             _startCancelButton.Press();
 
             //Assert
-            //60 kendes igen fra tidligere White Box undersøgelse..
+            //120 kendes fra tidligere White Box undersøgelse..
             fakeTimer.Received(1).Start(120);
         }
 
         [Test]
-        public void Timer_CookingIsStarted3_StartIsCalled()
+        public void Timer_CookingIsStartedWith180Sec_StartIsCalled()
         {
 
             //Act
@@ -89,7 +89,7 @@ namespace Microwave.Test.Integration
             _startCancelButton.Press();
 
             //Assert
-            //60 kendes igen fra tidligere White Box undersøgelse..
+            //180 kendes fra tidligere White Box undersøgelse..
             fakeTimer.Received(1).Start(180);
         }
 
@@ -108,7 +108,7 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
-        public void PowerTube_CookingIsStarted_TurnOnIsCalled()
+        public void PowerTube_CookingIsStartedWith50Watt_TurnOnIsCalled()
         {
             //Act
             _powerButton.Press();
@@ -118,17 +118,13 @@ namespace Microwave.Test.Integration
             _startCancelButton.Press();
 
             //Assert
-            //50 kendes igen fra tidligere White Box undersøgelse..
+            //50 kendes fra tidligere White Box undersøgelse.
             fakepowerTube.Received(1).TurnOn(50);
         }
 
         [Test]
-        public void PowerTube_CookingIsStarted2_TurnOnIsCalled()
+        public void PowerTube_CookingIsStartedWith100Watt_TurnOnIsCalled()
         {
-            //Navngivningen af metoden skal vi have kigget på. :)
-
-            //Arrange
-
             //Act
             _powerButton.Press();
 
@@ -138,17 +134,14 @@ namespace Microwave.Test.Integration
 
             _startCancelButton.Press();
 
-            //50 kendes igen fra tidligere White Box undersøgelse..
+            //Assert
+            //100 kendes fra tidligere White Box undersøgelse.
             fakepowerTube.Received(1).TurnOn(100);
         }
 
         [Test]
-        public void PowerTube_CookingIsStarted3_TurnOnIsCalled()
+        public void PowerTube_CookingIsStartedWith150Watt_TurnOnIsCalled()
         {
-            //Navngivningen af metoden skal vi have kigget på. :)
-
-            //Arrange
-
             //Act
             _powerButton.Press();
 
@@ -160,17 +153,14 @@ namespace Microwave.Test.Integration
 
             _startCancelButton.Press();
 
-            //50 kendes igen fra tidligere White Box undersøgelse..
+            //Assert
+            //150 kendes fra tidligere White Box undersøgelse.
             fakepowerTube.Received(1).TurnOn(150);
         }
 
         [Test]
         public void Display_Cooked1Minuted_ShowTimeCalled60Times()
         {
-            //Navngivningen af metoden skal vi have kigget på. :)
-
-            //Arrange
-
             //Act
             _powerButton.Press();
 
@@ -178,17 +168,14 @@ namespace Microwave.Test.Integration
 
             _startCancelButton.Press();
 
-            //60 kendes igen fra tidligere White Box undersøgelse..
+            //Assert
+            //1 minut kendes fra tidligere White Box undersøgelse.
             fakeDisplay.Received(1).ShowTime(1, 0);
         }
 
         [Test]
         public void Timer_DoorOpens_StopIsCalled()
         {
-            //Navngivningen af metoden skal vi have kigget på. :)
-
-            //Arrange
-
             //Act
             _powerButton.Press();
 
@@ -198,16 +185,13 @@ namespace Microwave.Test.Integration
 
             _door.Open();
 
+            //Assert
             fakeTimer.Received(1).Stop();
         }
 
         [Test]
         public void Timer_CancelPressed_StopIsCalled()
         {
-            //Navngivningen af metoden skal vi have kigget på. :)
-
-            //Arrange
-
             //Act
             _powerButton.Press();
 
@@ -217,16 +201,13 @@ namespace Microwave.Test.Integration
 
             _startCancelButton.Press();
 
+            //Assert
             fakeTimer.Received(1).Stop();
         }
 
         [Test]
         public void PowerTube_DoorOpens_TurnOffIsCalled()
         {
-            //Navngivningen af metoden skal vi have kigget på. :)
-
-            //Arrange
-
             //Act
             _powerButton.Press();
 
@@ -243,10 +224,6 @@ namespace Microwave.Test.Integration
         [Test]
         public void PowerTube_CancelPressed_TurnOffIsCalled()
         {
-            //Navngivningen af metoden skal vi have kigget på. :)
-
-            //Arrange
-
             //Act
             _powerButton.Press();
 
@@ -263,10 +240,6 @@ namespace Microwave.Test.Integration
         [Test]
         public void PowerTube_TimeHaveTicked_TurnOffIsCalled()
         {
-            //Navngivningen af metoden skal vi have kigget på. :)
-
-            //Arrange
-
             //Act
             _powerButton.Press();
 
@@ -283,10 +256,6 @@ namespace Microwave.Test.Integration
         [Test]
         public void Light_TimeHaveTicked_TurnOffIsCalled()
         {
-            //Navngivningen af metoden skal vi have kigget på. :)
-
-            //Arrange
-
             //Act
             _powerButton.Press();
 
