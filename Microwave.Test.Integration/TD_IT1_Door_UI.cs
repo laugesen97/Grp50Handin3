@@ -60,6 +60,33 @@ namespace Microwave.Test.Integration
         }
 
         [Test]
+        public void OpenDoor_ExtensionDoorOpenedBeforeTimeWasSet_Stop()
+        {
+            //Act
+            fakePowerButton.Press();
+
+            _sut.Open();
+
+            //Assert
+            _fakeLight.Received(1).TurnOn();
+        }
+
+
+        [Test]
+        public void OpenDoor_ExtensionDoorOpenedBeforeStartWasPressed_Stop()
+        {
+            //Act
+            fakePowerButton.Press();
+
+            fakeTimeButton.Press();
+
+            _sut.Open();
+
+            //Assert
+            _fakeLight.Received(1).TurnOn();
+        }
+
+        [Test]
         public void OpensDoor_ExtensionDoorOpenedWhileCooking_Stop()
         {
             //Act
