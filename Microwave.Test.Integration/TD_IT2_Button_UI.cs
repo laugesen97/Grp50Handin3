@@ -13,7 +13,7 @@ namespace Microwave.Test.Integration
       private IButton powerButton;
       private IButton timeButton;
       private IButton startCancelButton;
-      private IDoor fakeDoor;
+      private IDoor Door;
       private IDisplay fakeDisplay;
       private ILight fakeLight;
       private ICookController fakeCooker;
@@ -25,13 +25,13 @@ namespace Microwave.Test.Integration
          powerButton = new Button();
          timeButton = new Button();
          startCancelButton = new Button();
+         Door = new Door();
 
-         fakeDoor = Substitute.For<IDoor>();
          fakeDisplay = Substitute.For<IDisplay>();
          fakeCooker = Substitute.For<ICookController>();
          fakeLight = Substitute.For<ILight>();
 
-         UI = new UserInterface(powerButton, timeButton, startCancelButton, fakeDoor, fakeDisplay, fakeLight,
+         UI = new UserInterface(powerButton, timeButton, startCancelButton, Door, fakeDisplay, fakeLight,
             fakeCooker);
       }
 

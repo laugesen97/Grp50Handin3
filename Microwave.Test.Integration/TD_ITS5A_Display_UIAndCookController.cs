@@ -24,10 +24,10 @@ namespace Microwave.Test.Integration
         [SetUp]
         public void Setup()
         {
+
             fakeTimer = Substitute.For<ITimer>();
             fakepowerTube = Substitute.For<IPowerTube>();
             fakeOutput = Substitute.For<IOutput>();
-
 
             _powerButton = new Button();
             _timeButton = new Button();

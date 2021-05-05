@@ -2,6 +2,7 @@
 using Microwave.Classes.Controllers;
 using Microwave.Classes.Interfaces;
 using NSubstitute;
+using NSubstitute.Routing.Handlers;
 using NUnit.Framework;
 
 namespace Microwave.Test.Integration
@@ -21,9 +22,9 @@ namespace Microwave.Test.Integration
         [SetUp]
         public void SetUp()
         {
-            fakePowerButton = new Button();
-            fakeTimeButton = new Button();
-            fakeStartCancelButton = new Button();
+            fakePowerButton = Substitute.For<IButton>();
+            fakeTimeButton = Substitute.For<IButton>();
+            fakeStartCancelButton = Substitute.For<IButton>();
             _fakeCoockController = Substitute.For<ICookController>();
             _fakeDisplay = Substitute.For<IDisplay>();
             _fakeLight = Substitute.For<ILight>();
@@ -63,7 +64,7 @@ namespace Microwave.Test.Integration
         public void OpenDoor_ExtensionDoorOpenedBeforeTimeWasSet_Stop()
         {
             //Act
-            fakePowerButton.Press();
+            fakePowerButton.Pressed += Raise.Event();
             _sut.Open();
 
             //Assert
@@ -75,8 +76,8 @@ namespace Microwave.Test.Integration
         public void OpenDoor_ExtensionDoorOpenedBeforeStartWasPressed_Stop()
         {
             //Act
-            fakePowerButton.Press();
-            fakeTimeButton.Press();
+            fakePowerButton.Pressed += Raise.Event();
+            fakeTimeButton.Pressed += Raise.Event();
 
             _sut.Open();
 
@@ -88,11 +89,11 @@ namespace Microwave.Test.Integration
         public void OpensDoor_ExtensionDoorOpenedWhileCooking_Stop()
         {
             //Act
-            fakePowerButton.Press();
+            fakePowerButton.Pressed += Raise.Event();
 
-            fakeTimeButton.Press();
+            fakeTimeButton.Pressed += Raise.Event();
 
-            fakeStartCancelButton.Press();
+            fakeStartCancelButton.Pressed += Raise.Event();
 
             _sut.Open();
 
